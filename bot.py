@@ -134,7 +134,30 @@ def guess_qty(line):
 
 def is_candidate(line):
     n = normalize_text(line)
-    keys = ["teava","dn","zincata","negru","cot","teu","dop","red","sprinkler","mufa","vana","robinet","manometru","flansa","pompa","rezervor","cablu","tija","piulita","saiba"]
+
+    ignore_phrases = [
+        "reteaua de sprinklere",
+        "retea de sprinklere",
+        "retele de sprinklere",
+        "specificatii materiale",
+        "specificatii automatizare",
+        "sistem stingere",
+        "total materiale",
+        "total",
+        "nota",
+        "nr poz",
+    ]
+
+    if any(p in n for p in ignore_phrases):
+        return False
+
+    keys = [
+        "teava", "dn", "zincata", "negru", "cot", "teu", "dop", "red",
+        "sprinkler", "mufa", "vana", "robinet", "manometru", "flansa",
+        "pompa", "rezervor", "cablu", "tija", "piulita", "saiba",
+        "bratara", "ancora", "consola"
+    ]
+
     return any(k in n for k in keys)
 
 def find_by_syn(line, synonyms):
